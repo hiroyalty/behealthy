@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<% include ../partials/head %>
+</head>
+<body class="container">
+	<header>
+		<% include ../partials/header %>
+	</header>
+	<style>
+		#chat{
+			height:400px;
+		}
+		#adminchat{
+			height:400px;
+		}
+		#contentWrap{
+			display: none;
+		}
+		#adminwhisperWrap{
+			display: none;
+		}
+		#chatWrap{
+			float: left;
+			border: 1px #000 solid;
+		}
+		#adminchatWrap{
+			float: left;
+			border: 1px #000 solid;
+		}
+		.error{
+			color: red;
+		}
+		.whisper{
+			color:gray;
+			font-style:italic;
+		}
+	</style>
+	<main>
+	<% if(message!=null) { %>
+	<div class="col-sm-6.col-md-4.col-md-offset-4" id="nickWrap">
+		<h1 class="text-center">Welcome <%= message %></h1>
+			<div class="signup-wall"> 
+			<p id="nickError"></p>
+			<form class="form-signin", id="setNick">
+				<div class="form-group">
+				<input class="form-control" type="text" id="nickname" value=<%= message %> readonly></input>
+				</div>
+				<input type="submit"></input>
+			</form>
+			</div>
+	</div>
+	<!--div id="nickWrap">
+		<p>Welcome <%= message %></p>
+		<p id="nickError"></p>
+		<form id="setNick">
+			<input size="35" id="nickname" value=<%= message %>></input>
+			<input type="submit"></input>
+		</form>
+	</div -->
+	
+	<div class="row", id="contentWrap">
+		<div id="chatWrap">
+			<div id="chat"></div>
+			<form id="send-message">
+				<input class="form-control" size="35" id="message"></input>
+				<input type="submit"></input>
+			</form>
+			<br/><br/><br/>
+			<button type="button" class="btn btn-success" id="privatechat">Chat with Admin</button>
+		</div>
+		<div id="users"></div>
+	</div>
+	<div class="row", id="adminwhisperWrap">
+		<div id="adminchatWrap">
+			<div id="adminchat"></div>
+			<form id="send-whisper">
+				<input class="form-control" size="35" id="adminwhispermessage"></input>
+				<input type="submit"></input>
+			<form>
+			<br/><br/><br/>
+			<h1 class="text-center"><%= message %> Chat with Admin</h1>
+		</div>
+		<button type="button" class="btn btn-success" id="publichat">Back to Public Chat</button>
+	</div>
+	<%}%>
+	
+	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+	<script>
+		jQuery(function($){
+			var socket = io.connect();
+			var $nickForm = $('#setNick');
+			var $nickError = $('#nickError');
+			var $nickBox = $('#nickname');
+			var $users = $('#users');
+			var $messageForm = $('#send-message');
+			var $messageBox = $('#message');
+			var $chat = $('#chat');
+			var $adminchat = $('#adminchat');
+			var $privateChat = $('#send-whisper');
+			var $adminwhispermessage = $('#adminwhispermessage');
+			
+			$nickForm.submit(function(e) {
+				e.preventDefault();
+				socket.emit('new user', $nickBox.val(), function(data){
+					if(data) {
+						$('#nickWrap').hide();
+						$('#contentWrap').show();
+					} else {
+						$nickError.html('Username already taken! Try Again');
+					}
+				});
+				$nickBox.val('');
+			});
+			
+			document.querySelector('#privatechat').addEventListener('click', (evt) => {
+				//show the admin chat formdocument.
+				$('#contentWrap').hide();
+				$('#adminwhisperWrap').show();
+			});
+			
+			document.querySelector('#publichat').addEventListener('click', (evt) => {
+				//show the admin chat formdocument.
+				$('#adminwhisperWrap').hide();
+				$('#contentWrap').show();
+			});
+			
+			
+			$privateChat.submit(function(e) {
+				e.preventDefault();
+				socket.emit('whisperadmin', $adminwhispermessage.val(), function(data){
+					$adminchat.append('<span class="whisper"><b>' + data.nick + ': </b>' + data.msg + "</span><br/>");
+				});
+				$adminwhispermessage.val('');
+			});
+			
+			socket.on('newwhisperadmin', function(data) {
+				$adminchat.append('<span class="whisper"><b>' + data.nick + ': </b>' + data.msg + "</span><br/>")
+			});
+			
+			
+			socket.on('usernames', function(data){
+				var html = 'Group Sharing Session Live <br/>';
+				for(var i=0; i < data.length; i++){
+					html += data[i] + '<br/>'
+				}
+				$users.html(html);
+			});
+			
+			$messageForm.submit(function(e) {
+				e.preventDefault();
+				socket.emit('send message', $messageBox.val(), function(data){
+					$chat.append('<span class="error"><b>' + data +  "</span><br/>");
+				});
+				$messageBox.val('');
+			});
+			
+			socket.on('load old msgs', function(docs){
+				docs = docs.sort(function(a, b){return new Date(a.time) - new Date(b.time)});
+				docs.forEach(doc => {
+					console.log(doc);
+					$chat.append('<span class="msg"><b>' + doc.nick + ': </b>' + doc.msg + "</span><br/>");
+				});
+			});
+			
+			socket.on('new message', function(data) {
+				//$chat.append('<span class="msg"><b>' + data.nick + ': </b>' + data.msg + "</span><br/>");
+				displayMsg(data);
+			});
+			
+			function displayMsg(data){
+				$chat.append('<span class="msg"><b>' + data.nick + ': </b>' + data.msg + "</span><br/>");
+			}
+			
+			socket.on('whisper', function(data) {
+				$chat.append('<span class="whisper"><b>' + data.nick + ': </b>' + data.msg + "</span><br/>")
+			});
+		});
+		</script>
+	<footer>
+		<% include ../partials/footer %>
+	</footer>
+	
+</body>
+</html>
+	

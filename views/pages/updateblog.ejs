@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<% include ../partials/head %>
+</head>
+<body class="container">
+
+	<header>
+		<% include ../partials/header %>
+	</header>
+
+	<main>
+		<div class="container">
+		<% if(oneblog!=null) { %>
+				<div class="col-sm-6.col-md-4.col-md-offset-4">
+					<h1 class="text-center">Update Blog</h1>
+						<div class="signup-wall"> 
+							<form class="form-signin", action="/blog/updateblog", method="POST">
+								<div class="form-group">
+									<input type="hidden", name="did", id="did" class='form-control', value=<%= oneblog._id %>></input>
+								</div>
+								<div class="form-group">
+								<label for="blogtitle">Update title</label>
+									<input type="text", name="upblogtitle", class='form-control' value="<%= oneblog.title %>", id="upblogtitle", required, autofocus></input>
+								</div>
+								<div class="form-group">
+									<label for="upcategory">Category</label>
+									<select class="form-control" name="upblogcategory", id="upblogcategory", required>
+									<option value="blood pressure">Blood Pressure</option>
+									<option value="cholesterol control">Cholesterol Control</option>
+									<option value="blood sugar">Blood Sugar</option>
+									<option value="loose weight">Loose Weight</option>
+									<option value="get active">Get Active</option>
+									<option value="general">General</option>
+									</select>
+								</div>
+								<div class="form-group">
+								<label for="upteaser">Intro</label>
+									<textarea class="form-control" id="upteaser" name="upteaser", rows="3" value="<%= oneblog.teaser %>", required></textarea>
+								</div>
+								<div class="form-group">
+								<label for="updetails">Message</label>
+									<textarea class="form-control" id="updetails" name="updetails", rows="6" value="<%= oneblog.details %>", required></textarea>
+								</div>
+								<div class="form-group">
+								<label for="upexpireddate">Expiring Date</label>
+									<input type='Date', name='upexpireddate' class='form-control', id='upexpireddate' value="<%= oneblog.dateexpired %>", required></input>
+								</div>
+								<!--
+								<div class="form-group">
+									<label for="upblogimage">File input</label>
+									<input type="file" class="form-control-file" id="upblogimage" name="upblogimage", aria-describedby="fileHelp">
+									<small id="fileHelp" class="form-text text-muted">kindly use the right right image dimension for your post.</small>
+								</div> -->
+								<div class="form-group">
+									<label for="uppublish">Publish</label>
+									<select class="form-control", name="uppublish", id="uppublish", required>
+									<option selected>select here</option>
+									<option value="yes">Yes</option>
+									<option value="no">No</option>
+									</select>
+								</div>
+								<button class="btn btn-lg btn-primary btn-block", type="submit">Update</button>
+							</form>
+							<span class="clearfix"></span>
+						</div>
+				</div>
+			<%}%>
+		</div>
+	</main>
+
+	<footer>
+		<% include ../partials/footer %>
+	</footer>
+	
+</body>
+</html>

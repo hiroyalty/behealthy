@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<% include ../partials/head %>
+</head>
+<body class="container">
+
+	<header>
+		<% include ../partials/header %>
+	</header>
+
+	<main>
+	<% blog.forEach(function(oneblog) { %>
+		<div class="card mb-3">
+		<img class="card-img-top" src="/files/uploads/<%= oneblog.blogimage %>" alt="Card image cap">
+			<div class="card-block">
+			<h4 class="card-title"><%= oneblog.title %></h4>
+			<p class="card-text"><%= oneblog.teaser %></p>
+			<p class="card-text"><small class="text-muted"><%= oneblog.datepublished %></small></p>
+			<a href="/blog/getfullblog/<%= oneblog._id %>" class="btn btn-primary">See Full</a>
+			<div class="card-block">
+			<a href="/blog/getblog/<%= oneblog._id %>" class="card-link">Update blog</a>
+			<a href="/blog/delete/<%= oneblog._id %>/<%= oneblog.blogimage %>" class="card-link">Delete blog</a>
+  </div>
+			</div>
+		</div>
+		<% }); %>
+	</main>
+
+	<footer>
+		<% include ../partials/footer %>
+	</footer>
+	
+</body>
+</html>

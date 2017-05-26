@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<% include ../partials/head %>
+</head>
+<body class="container">
+
+	<header>
+		<% include ../partials/header %>
+	</header>
+
+	<main>
+		<div class="container">
+				<div class="col-sm-6.col-md-4.col-md-offset-4">
+					<h1 class="text-center">Add a new Blog</h1>
+						<div class="signup-wall">
+							<form class="form-signin", action="/blog/makeblog", method="POST" enctype="multipart/form-data">
+								<div class="form-group">
+								<label for="blogtitle">Title</label>
+									<input type="text", name="blogtitle", class='form-control' placeholder='blog title', id="blogtitle", required, autofocus></input>
+								</div>
+								<div class="form-group">
+									<label for="category">Category</label>
+									<select class="form-control" name="blogcategory", id="blogcategory">
+									<option value="blood pressure">Blood Pressure</option>
+									<option value="cholesterol control">Cholesterol Control</option>
+									<option value="blood sugar">Blood Sugar</option>
+									<option value="loose weight">Loose Weight</option>
+									<option value="get active">Get Active</option>
+									<option value="general">General</option>
+									</select>
+								</div>
+								<div class="form-group">
+								<label for="teaser">Intro</label>
+									<textarea class="form-control" id="teaser" name="teaser", rows="3"></textarea>
+								</div>
+								<div class="form-group">
+								<label for="details">Message</label>
+									<textarea class="form-control" id="details" name="details", rows="6"></textarea>
+								</div>
+								<div class="form-group">
+								<label for="expireddate">Expiring Date</label>
+									<input type='Date', name='expireddate' class='form-control', id='expireddate'></input>
+								</div>
+								<div class="form-group">
+									<label for="blogimage">File input</label>
+									<input type="file" class="form-control-file" id="blogimage" name="blogimage", aria-describedby="fileHelp">
+									<small id="fileHelp" class="form-text text-muted">kindly use the right right image dimension for your post.</small>
+								</div>
+								<div class="form-group">
+									<label for="publish">Publish</label>
+									<select class="form-control", name="publish", id="publish">
+									<option value="yes">Yes</option>
+									<option value="no">No</option>
+									</select>
+								</div>
+								<button class="btn btn-lg btn-primary btn-block", type="submit">Submit</button>
+							</form>
+							<span class="clearfix"></span>
+						<% if(message!=null){ %>    
+							<div>
+								<h6 class="text-center.error-message"><%= message %></h6>
+							</div>
+						<%}%> 
+						</div>
+				</div>
+		</div>
+	</main>
+
+	<footer>
+		<% include ../partials/footer %>
+	</footer>
+	
+</body>
+</html>

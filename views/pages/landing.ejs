@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<% include ../partials/head %>
+</head>
+<body class="container">
+
+	<header>
+		<% include ../partials/header %>
+	</header>
+
+	<main>
+		<div class="card mb-3">
+  		<img class="card-img-top" src="/files/uploads/healthy_site2.jpg" alt="Card image cap">
+  			<div class="card-block">
+			<% if(message!=null){ %>    
+    		<h4 class="card-title">Welcome to Live Free! <%= message %></h4>
+			<%}%>
+    		<p class="card-text">Using the latest technological Advancements to keep your Health in place.  Read up several articles and blogs to deepen your knowledge.</p>
+    		<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+  		</div>
+		</div>
+			<div class="card">
+  			<div class="card-block">
+    		<h4 class="card-title">Become a member</h4>
+    		<p class="card-text">By Choosing to register with us you are taking control of your health. We do not share your information with any third Party.</p>
+    		<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+  		</div>
+  		
+		</div>
+	</main>
+
+	<footer>
+		<% include ../partials/footer %>
+	</footer>
+	
+</body>
+</html>

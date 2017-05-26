@@ -1,0 +1,39 @@
+{
+  "name": "behealthy",
+  "version": "1.0.0",
+  "description": "heroku implementation of health app",
+  "main": "web.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "health",
+    "heroku"
+  ],
+  "author": "gbolaga-famodun",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.17.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "debug": "^2.6.8",
+    "dotenv": "^4.0.0",
+    "ejs": "^2.5.6",
+    "express": "^4.15.3",
+    "express-session": "^1.15.3",
+    "fs": "0.0.1-security",
+    "glob": "^7.1.2",
+    "http": "0.0.0",
+    "https": "^1.0.0",
+    "moment": "^2.18.1",
+    "mongoose": "^4.10.2",
+    "morgan": "^1.8.2",
+    "multer": "^1.3.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
+  },
+  "engines": {
+    "node": "6.10.3"
+  }
+}

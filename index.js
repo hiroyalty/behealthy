@@ -88,7 +88,7 @@ app.listen(app.get('port'), function() {
 });
 
 //module.exports = server;
-ios.sockets.on('connection', (socket) => {
+io.sockets.on('connection', (socket) => {
 	var query = Chat.find({ msgtype: 'publicchat' });
 	query.sort('-created').limit(5).exec(function(err, docs){
 		if(err) throw err;

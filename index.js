@@ -89,9 +89,11 @@ const INDEXX = path.join(__dirname, '/views/adminchat.ejs');
 
 
 app.use((req, res) => res.sendFile(INDEX) );
-app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+//app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+const server = http.createServer(app).listen(PORT); 
 
-const ios = socketIO(app);
+
+const ios = socketIO(server);
 //app.listen(app.get('port'), function() {
 //  console.log('Node app is running on port', app.get('port'));
 //});

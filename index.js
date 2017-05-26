@@ -87,7 +87,7 @@ app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
-module.exports = server;
+//module.exports = server;
 ios.sockets.on('connection', (socket) => {
 	var query = Chat.find({ msgtype: 'publicchat' });
 	query.sort('-created').limit(5).exec(function(err, docs){

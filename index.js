@@ -9,7 +9,7 @@ const glob = require('glob');
 const moment = require('moment');
 const fs = require('fs');
 const multer  = require('multer');
-const io = require('socket.io');
+const socketIO = require('socket.io');
 const dbConfig = require('./db');
 const flash = require('connect-flash');
 const mongoose = require('mongoose');
@@ -83,12 +83,21 @@ if (app.get('env') === 'development') {
     });
 }
 
-app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
-});
+const PORT = process.env.PORT || 5000;
+const INDEX = path.join(__dirname, '/views/chat.ejs');
+const INDEXX = path.join(__dirname, '/views/adminchat.ejs');
+
+
+app.use((req, res) => res.sendFile(INDEX) );
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+
+const ios = socketIO(app);
+//app.listen(app.get('port'), function() {
+//  console.log('Node app is running on port', app.get('port'));
+//});
 
 //module.exports = server;
-io.sockets.on('connection', (socket) => {
+ios.on('connection', (socket) => {
 	var query = Chat.find({ msgtype: 'publicchat' });
 	query.sort('-created').limit(5).exec(function(err, docs){
 		if(err) throw err;
@@ -108,7 +117,7 @@ io.sockets.on('connection', (socket) => {
 	});
 	
 	function updateNicknames(){
-		ios.sockets.emit('usernames', Object.keys(users));
+		ios.emit('usernames', Object.keys(users));
 	}
 	
 	socket.on('send message', (data, callback) => {
@@ -134,7 +143,7 @@ io.sockets.on('connection', (socket) => {
 			var newMsg = new Chat({msg: msg, nick: socket.nickname, time: moment().format('YYYY-MM-DD HH:mm:ss'), msgtype: 'publicchat' });
 			newMsg.save(function(err){
 				if(err) throw err;
-				ios.sockets.emit('new message', {msg: msg, nick: socket.nickname});
+				ios.emit('new message', {msg: msg, nick: socket.nickname});
 			});
 		//socket.broadcast.emit('new message', data); To everyone except the user.
 		}

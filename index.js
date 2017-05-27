@@ -32,7 +32,7 @@ let users = {};
 
 app.set('port', (process.env.PORT || 5000));
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname + '/public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
@@ -56,6 +56,10 @@ app.use(passport.session());
 // Using the flash middleware provided by connect-flash to store messages in session
  // and displaying in templates
 app.use(flash());
+
+//import Chat module
+const Chat = require('./models/chat');
+//const Chatroom = require('./models/chatroom');
 
 // Initialize Passport
 const initPassport = require('./passport/init');

@@ -30,7 +30,7 @@ const options = {
 
 let users = {};
 
-app.set('port', (process.env.PORT || 3000));
+//app.set('port', (process.env.PORT || 3000));
 
 app.use(express.static(path.join(__dirname + '/public')));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -87,7 +87,7 @@ if (app.get('env') === 'development') {
     });
 }
 
-const server = http.createServer(options, app).listen(app.get('port'), () => {
+const server = https.createServer(options, app).listen(process.env.PORT, () => {
    console.log('Started and listening on port ' + app.get('port'));
 });
 

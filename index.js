@@ -86,8 +86,8 @@ if (app.get('env') === 'development') {
         });
     });
 }
-
-const server = http.createServer(options, app).listen(process.env.PORT || 5000, () => {
+//const server = http.createServer(options, app).listen(process.env.PORT || 5000, () => {
+const server = http.createServer(app).listen(process.env.PORT || 5000, () => {
    console.log('Started and listening on port ' + app.get('port'));
 });
 

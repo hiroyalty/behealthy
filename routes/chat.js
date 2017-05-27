@@ -26,10 +26,10 @@ router.get('/chat', isAuthenticated, (req, res) => {
     res.render('pages/chat', { message: req.user.username });
 });
 
-router.get('/chat', isAuthenticated, (req, res) => {
-	console.log('loading admin chat page');
-    res.render('pages/adminchat', { message: req.user.username });
-});
+//router.get('/chat', isAuthenticated, (req, res) => {
+//	console.log('loading admin chat page');
+ //   res.render('pages/adminchat', { message: req.user.username });
+//});
 
 module.exports = router
 //io.sockets.on('connection', (socket) => {

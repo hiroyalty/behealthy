@@ -1,7 +1,7 @@
-const io = require('socket.io');
+const socketio = require('socket.io');
 const moment = require('moment');
 const Chat = require('../models/chat');
-const Chatroom = require('../models/chatroom');
+const Chatroom = require('../models/chatroom'); //list of all people chating.
 
 const isAuthenticated = (req, res, next) => {
 	if (req.isAuthenticated())
@@ -11,11 +11,12 @@ const isAuthenticated = (req, res, next) => {
 }
 
 let users = {};
-const server = require('../server');
-const ios = io.listen(server);
+//const server = require('../server');
+//const ios = io.listen(server);
 
-module.exports = function(server) {	
-ios.sockets.on('connection', (socket) => {
+exports.listen = (server) => {
+	io = socketio.listen(server);
+	io.sockets.on('connection', (socket) => {
 	console.log('loading io');
 	var query = Chat.find({});
 	query.sort('-created').limit(5).exec(function(err, docs){

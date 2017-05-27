@@ -90,16 +90,19 @@
 	<script>
 		jQuery(function($){
 			var socket = io.connect();
-			var $nickForm = $('#setNick');
-			var $nickError = $('#nickError');
-			var $nickBox = $('#nickname');
-			var $users = $('#users');
-			var $messageForm = $('#send-message');
-			var $messageBox = $('#message');
-			var $chat = $('#chat');
-			var $adminchat = $('#adminchat');
-			var $privateChat = $('#send-whisper');
-			var $adminwhispermessage = $('#adminwhispermessage');
+			var $nickForm = $('#setNick');  //where we set nick name
+			var $nickError = $('#nickError'); //not really applicable anymore, since we preselect nickname
+			var $nickBox = $('#nickname'); //nick name id
+
+			var $users = $('#users'); //users list panel by the side
+
+			var $messageForm = $('#send-message'); //message form inside contentwrap
+			var $messageBox = $('#message'); //message form input
+			var $chat = $('#chat'); //chat panel for loading chat history
+
+			var $privateChat = $('#send-whisper'); // admin private msg form inside
+			var $adminwhispermessage = $('#adminwhispermessage'); //private chat from input
+			var $adminchat = $('#adminchat'); //adminchat panel for loading admin private chat 
 			
 			$nickForm.submit(function(e) {
 				e.preventDefault();
@@ -127,19 +130,6 @@
 			});
 			
 			
-			$privateChat.submit(function(e) {
-				e.preventDefault();
-				socket.emit('whisperadmin', $adminwhispermessage.val(), function(data){
-					$adminchat.append('<span class="whisper"><b>' + data.nick + ': </b>' + data.msg + "</span><br/>");
-				});
-				$adminwhispermessage.val('');
-			});
-			
-			socket.on('newwhisperadmin', function(data) {
-				$adminchat.append('<span class="whisper"><b>' + data.nick + ': </b>' + data.msg + "</span><br/>")
-			});
-			
-			
 			socket.on('usernames', function(data){
 				var html = 'Group Sharing Session Live <br/>';
 				for(var i=0; i < data.length; i++){
@@ -154,6 +144,15 @@
 					$chat.append('<span class="error"><b>' + data +  "</span><br/>");
 				});
 				$messageBox.val('');
+			});
+
+			$privateChat.submit(function(e) {
+				e.preventDefault();
+				socket.emit('whisperadmin', $adminwhispermessage.val(), function(data){
+					//$adminchat.append('<span class="whisper"><b>' + data.nick + ': </b>' + data.msg + "</span><br/>");
+					$adminchat.append('<span class="error"><b>' + data +  "</span><br/>");
+				});
+				$adminwhispermessage.val('');
 			});
 			
 			socket.on('load old msgs', function(docs){
@@ -175,6 +174,10 @@
 			
 			socket.on('whisper', function(data) {
 				$chat.append('<span class="whisper"><b>' + data.nick + ': </b>' + data.msg + "</span><br/>")
+			});
+			
+			socket.on('newwhisperadmin', function(data) {
+				$adminchat.append('<span class="whisper"><b>' + data.nick + ': </b>' + data.msg + "</span><br/>")
 			});
 		});
 		</script>

@@ -29,7 +29,7 @@ const options = {
 };
 
 let users = {};
-
+let currentuser = null;
 //app.set('port', (process.env.PORT || 3000));
 
 app.use(express.static(path.join(__dirname + '/public')));
@@ -86,6 +86,7 @@ if (app.get('env') === 'development') {
         });
     });
 }
+//*** FOR HEROKU SOCKET IMPLEMENTATION WE USE HTTP AND NO OPTIONS AS ARGUMENT*/
 //const server = http.createServer(options, app).listen(process.env.PORT || 5000, () => {
 const server = http.createServer(app).listen(process.env.PORT || 5000, () => {
    console.log('Started and listening on port ' + app.get('port'));
@@ -122,6 +123,7 @@ ios.on('connection', (socket) => {
 		} else {
 			callback(true);
 			socket.nickname = data;
+            currentuser = data;
 			users[socket.nickname] = socket;
 			updateNicknames(); //io.sockets.emit('usernames', nicknames);
 		}
@@ -165,7 +167,7 @@ ios.on('connection', (socket) => {
 		var newMsg = new Chat({msg: msg, nick: socket.nickname, time: moment().format('YYYY-MM-DD HH:mm:ss'), msgtype: 'privatechat' });
 		newMsg.save(function(err){
 			if(err) throw err;
-			users['admin'].emit('newwhisperadmin', {msg: msg, nick: socket.nickname});
+			users[currentuser,'admin'].emit('newwhisperadmin', {msg: msg, nick: socket.nickname});
 		});
 	});
 	

@@ -87,7 +87,7 @@ if (app.get('env') === 'development') {
     });
 }
 
-const server = https.createServer(options, app).listen(app.get('port'), () => {
+const server = http.createServer(options, app).listen(app.get('port'), () => {
    console.log('Started and listening on port ' + app.get('port'));
 });
 
@@ -102,6 +102,7 @@ const server = https.createServer(options, app).listen(app.get('port'), () => {
 
 
 const ios = socketIO(server);
+//socket = ios.listen(process.env.PORT);
 //app.listen(app.get('port'), function() {
 //  console.log('Node app is running on port', app.get('port'));
 //});

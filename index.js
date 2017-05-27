@@ -30,7 +30,7 @@ const options = {
 
 let users = {};
 
-app.set('port', (process.env.PORT || 5000));
+app.set('port', (process.env.PORT || 3000));
 
 app.use(express.static(path.join(__dirname + '/public')));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -58,7 +58,7 @@ app.use(passport.session());
 app.use(flash());
 
 //import Chat module
-//const Chat = require('./models/chat');
+const Chat = require('./models/chat');
 //const Chatroom = require('./models/chatroom');
 
 // Initialize Passport
@@ -87,18 +87,18 @@ if (app.get('env') === 'development') {
     });
 }
 
-https.createServer(options, app).listen(app.get('port'), () => {
-   console.log('Started and listening on port' + app.get('port'));
+const server = https.createServer(options, app).listen(app.get('port'), () => {
+   console.log('Started and listening on port ' + app.get('port'));
 });
 
 //const PORT = process.env.PORT || 5000;
 //const INDEX = path.join(__dirname, '/views/chat.ejs');
 //const INDEXX = path.join(__dirname, '/views/adminchat.ejs');
 
-/*
+
 //app.use((req, res) => res.sendFile(INDEX) );
-app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
-const server = https.createServer(app).listen(PORT); 
+//app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+//const server = https.createServer(app).listen(PORT); 
 
 
 const ios = socketIO(server);
@@ -173,4 +173,4 @@ ios.on('connection', (socket) => {
 		delete users[socket.nickname];
 		updateNicknames();
 	});
-}); */
+});

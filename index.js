@@ -87,7 +87,7 @@ if (app.get('env') === 'development') {
     });
 }
 
-const server = https.createServer(options, app).listen(process.env.PORT, () => {
+const server = http.createServer(options, app).listen(process.env.PORT || 5000, () => {
    console.log('Started and listening on port ' + app.get('port'));
 });
 

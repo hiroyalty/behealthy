@@ -87,9 +87,9 @@ if (app.get('env') === 'development') {
     });
 }
 
-const PORT = process.env.PORT || 5000;
-const INDEX = path.join(__dirname, '/views/chat.ejs');
-const INDEXX = path.join(__dirname, '/views/adminchat.ejs');
+//const PORT = process.env.PORT || 5000;
+//const INDEX = path.join(__dirname, '/views/chat.ejs');
+//const INDEXX = path.join(__dirname, '/views/adminchat.ejs');
 
 /*
 //app.use((req, res) => res.sendFile(INDEX) );

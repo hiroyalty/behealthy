@@ -9,9 +9,11 @@
 	</header>
 	<style>
 		#chat{
+			overflow: scroll;
 			height:400px;
 		}
 		#adminchat{
+			overflow: scroll;
 			height:400px;
 		}
 		#contentWrap{
@@ -58,10 +60,11 @@
 			<input type="submit"></input>
 		</form>
 	</div -->
-	
+	<p></p>
+	<p></p>
 	<div class="row", id="contentWrap">
 		<div id="chatWrap">
-			<div id="chat"></div>
+			<div id="chat" style="overflow:scroll"></div>
 			<form id="send-message">
 				<input class="form-control" size="35" id="message"></input>
 				<input type="submit"></input>
@@ -73,7 +76,7 @@
 	</div>
 	<div class="row", id="adminwhisperWrap">
 		<div id="adminchatWrap">
-			<div id="adminchat"></div>
+			<div id="adminchat" style="overflow:scroll"></div>
 			<form id="send-whisper">
 				<input class="form-control" size="35" id="adminwhispermessage"></input>
 				<input type="submit"></input>

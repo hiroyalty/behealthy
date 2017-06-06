@@ -38,6 +38,7 @@
 			font-style:italic;
 		}
 	</style>
+	
 	<main>
 	<% if(message!=null) { %>
 	<div class="col-sm-6.col-md-4.col-md-offset-4" id="nickWrap">
@@ -64,13 +65,13 @@
 	<p></p>
 	<div class="row", id="contentWrap">
 		<div id="chatWrap">
-			<div id="chat" style="overflow:scroll"></div>
+			<div id="chat" style="overflow:auto"></div>
 			<form id="send-message">
 				<input class="form-control" size="35" id="message"></input>
 				<input type="submit"></input>
 			</form>
 			<br/><br/><br/>
-			<button type="button" class="btn btn-success" id="privatechat">Chat with Admin</button>
+			<!--button type="button" class="btn btn-success" id="privatechat">Chat with Admin</button -->
 		</div>
 		<div id="users"></div>
 	</div>
@@ -120,11 +121,11 @@
 				$nickBox.val('');
 			});
 			
-			document.querySelector('#privatechat').addEventListener('click', (evt) => {
+			/*document.querySelector('#privatechat').addEventListener('click', (evt) => {
 				//show the admin chat formdocument.
 				$('#contentWrap').hide();
 				$('#adminwhisperWrap').show();
-			});
+			}); */
 			
 			document.querySelector('#publichat').addEventListener('click', (evt) => {
 				//show the admin chat formdocument.

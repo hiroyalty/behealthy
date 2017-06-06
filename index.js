@@ -111,7 +111,7 @@ const ios = socketIO(server);
 //module.exports = server;
 ios.on('connection', (socket) => {
 	var query = Chat.find({ msgtype: 'publicchat' });
-	query.sort('-created').limit(20).exec(function(err, docs){
+	query.sort('-created').limit(12).exec(function(err, docs){
 		if(err) throw err;
 		console.log('docs ' + docs);
 		socket.emit('load old msgs', docs);
